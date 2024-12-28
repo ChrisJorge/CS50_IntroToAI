@@ -1,0 +1,6 @@
+Below are the basic commands necessary inorder to get the environment setup for each folder
+
+CREATING THE ENVIRONMENT
+1. While inside the folder create a command prompt (CMD) terminal and type conda create -p venv python==3.12 or what ever python version you need
+2. To activate the environment in that same CMD terminal type conda activate venv/
+3. To deactivate the enviroment in the same CMD terminal type conda deactivate
