@@ -92,8 +92,36 @@ def shortest_path(source, target):
     If no possible path, returns None.
     """
 
-    # TODO
-    raise NotImplementedError
+    if source == target: # Check if the source is the target
+        ans = [] # Initialize a list for the answer
+        return ans # Return the empty list as the source and the target are the same
+    
+    node = Node(source, None, None) # Create a starting node
+    Frontier = QueueFrontier() # Initialize the frontier that will be used to solve the problem
+    Visisted = set() # Initialize a set for visited people
+    Frontier.add(node) # Add the starting node
+
+    while Frontier.empty() == False: # Loop through the frontier as long as it has nodes
+        CurrentNode = Frontier.remove() # Remove the first node from the frontier
+        Visisted.add(CurrentNode.state) # Add the person ID to the visisted set
+
+        neighbors = neighbors_for_person(CurrentNode.state) # Get all possible neighbors for the current person
+        for movie, person in neighbors: # Get the movie and person from each neighbor
+
+            #Check to ensure the person is not in the visited set and that the person is not already in the frontier
+            if (person not in Visisted) and (Frontier.contains_state(person) == False): 
+                NewNode = Node(person, CurrentNode, movie) # Create a new node with the person, currentNode, and movie as the state, parent, and action
+
+                if NewNode.state == target: # Check if the new nodes state (person ID) is equal to the target ID
+                    ans = [] # Initialize an answer list
+                    while NewNode.parent is not None: # Backtrack through the nodes as long as the parent is not none
+                        ans.append( (NewNode.action, NewNode.state) ) # Append the current node to the answer list
+                        NewNode = NewNode.parent # backtrack to the node before the current node
+                    ans.reverse() # Reverse the answer array
+                    return ans # return the answer array
+                
+                Frontier.add(NewNode) # Add the new node to the frontier
+    return None # Return none if no link can be found
 
 
 def person_id_for_name(name):
